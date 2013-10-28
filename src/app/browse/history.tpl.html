@@ -1,21 +1,11 @@
 <div class="browse-history">
-	<div ng-repeat="item in history" class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+	<div ng-repeat="item in history | limitTo:-3" class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
 		<span class="item-inner">
 			<a href="{{item.url}}" itemprop="url">
 				<span itemprop="title">
-					{{item.title}}
+					{{item.title}} {{$index}}
 				</span>
 			</a>
 		</span>
 	</div>
-	<!--<span class="seperator">
-		›
-	</span>
-	<div class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-		<span class="item-inner">
-		    <a href="#" itemprop="url">
-		      <span itemprop="title">Person - Ola Norman</span>
-		    </a>
-		</span>
-	</div>-->
 </div>

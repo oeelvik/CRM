@@ -34,7 +34,19 @@ angular.module( 'crm.browse', [
     $scope.history = [
         {
             title: $scope.model.title,
-            url: "#" + $location.path()
+            url: '#' + $location.path()
+        },
+        {
+            title: 'Group - Customer',
+            url: '#/browse/person/10'
+        },
+        {
+            title: 'Person - Ola Norman',
+            url: '#/browse/person/10'
+        },
+        {
+            title: 'Person - Kari Norman',
+            url: '#/browse/person/10'
         }
     ];
 
