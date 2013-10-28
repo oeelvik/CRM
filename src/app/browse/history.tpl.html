@@ -1,19 +1,21 @@
-<div class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-	<span class="item-inner">
-		<a href="#" itemprop="url">
-			<span itemprop="title">
-				Group - Players
-			</span>
-		</a>
+<div class="browse-history">
+	<div ng-repeat="item in history" class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+		<span class="item-inner">
+			<a href="{{item.url}}" itemprop="url">
+				<span itemprop="title">
+					{{item.title}}
+				</span>
+			</a>
+		</span>
+	</div>
+	<!--<span class="seperator">
+		›
 	</span>
-</div>
-<span class="seperator">
-	›
-</span>
-<div class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-	<span class="item-inner">
-	    <a href="#" itemprop="url">
-	      <span itemprop="title">Person - Ola Norman</span>
-	    </a>
-	</span>
+	<div class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+		<span class="item-inner">
+		    <a href="#" itemprop="url">
+		      <span itemprop="title">Person - Ola Norman</span>
+		    </a>
+		</span>
+	</div>-->
 </div>

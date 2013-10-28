@@ -10,7 +10,7 @@ angular.module( 'crm.browse', [
     url: '/browse',
     views: {
       "main": {
-        controller: 'BrowseCtrl',
+        controller: function(){},
         templateUrl: 'browse/browse.tpl.html'
       }
     }
@@ -19,37 +19,34 @@ angular.module( 'crm.browse', [
   $stateProvider.state( 'browse.model', {
     url: '/{model:[a-z_-]{1,20}}',
     views: {
-      "browser-history": {
+      "browser": {
         controller: 'BrowseCtrl',
-        templateUrl: 'browse/history.tpl.html'
-      },
-      "browser-list": {
-        controller: 'BrowseCtrl',
-        templateUrl: 'browse/list.tpl.html'
-      },
-      "browser-detail": {
-        controller: 'BrowseCtrl',
-        templateUrl: 'browse/detail.tpl.html'
+        templateUrl: 'browse/browse.model.tpl.html'
       }
     }
   });
 })
 
-.controller( 'BrowseCtrl', function BrowseController( $scope, $state, $stateParams, Page, Data ) {
-    $scope.state = $stateParams;
+.controller( 'BrowseCtrl', function BrowseController( $scope, $stateParams, $location, Page, Data ) {
+    $scope.model = Data.model[$stateParams.model];
 
-    $scope.$watch('$stateParams.model', function(newModel, oldModel) {
-        if(angular.isDefined(Data.model[$stateParams.model].title)) {
-            $scope.model = Data.model[$stateParams.model];
-            Page.setTitle(Data.model[$stateParams.model].title);
+
+    $scope.history = [
+        {
+            title: $scope.model.title,
+            url: $location.path()
         }
-    });
-
-    console.log(Data);
-    console.log($stateParams.model);
-
-    Page.setTitle($scope.model);
+    ];
+    
+    Page.setTitle($scope.model.title);
 })
 
+.directive('browsehistory', function() {
+    return {
+        restrict: "E",
+        replace: true,
+        templateUrl: 'browse/history.tpl.html'
+    };
+})
 
 ;
