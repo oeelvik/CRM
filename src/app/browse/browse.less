@@ -1,0 +1,42 @@
+.rotateTranslateOrigin(@degrees, @x, @y, @ox, @oy, @oz) {
+  -webkit-transform: rotate(@degrees) translate(@x, @y);
+     -moz-transform: rotate(@degrees) translate(@x, @y);
+      -ms-transform: rotate(@degrees) translate(@x, @y);
+       -o-transform: rotate(@degrees) translate(@x, @y);
+          transform: rotate(@degrees) translate(@x, @y);
+  -webkit-transform-origin: @ox @oy;
+     -moz-transform-origin: @ox @oy;
+      -ms-transform-origin: @ox @oy;
+       -o-transform-origin: @ox @oy;
+          transform-origin: @ox @oy;
+}
+
+div.crm-browser {
+	section {
+		float: left;
+
+		&.history {
+				background-color: #0c0;
+			ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				background-color: #c00;
+
+
+				.rotateTranslateOrigin(270deg, -100%, 0, left, top, 0);
+				
+				li {
+					background-color: #00c;
+				}
+			}
+		}
+		&.list {
+			background-color: grey;
+			width: 200px;
+		}
+		&.detail {
+			
+		}
+	}
+}

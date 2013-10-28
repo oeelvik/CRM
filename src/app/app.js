@@ -1,9 +1,15 @@
+/**
+ * @author Oystein Schroder Elvik
+ */
 angular.module( 'crm', [
   'templates-app',
   'templates-common',
-  'crm.dashboard',
   'ui.state',
-  'ui.route'
+  'ui.route',
+
+  'crm.data',
+  'crm.dashboard',
+  'crm.browse'
 ])
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {
@@ -13,12 +19,25 @@ angular.module( 'crm', [
 .run( function run () {
 })
 
-.controller( 'AppCtrl', function AppCtrl ( $scope, $location ) {
+.factory('Page', function() {
+   var page = 'CRM';
+   var title = 'default';
+   return {
+     getTitle: function() { return title + " | " + page; },
+     setTitle: function(newTitle) { title = newTitle; }
+   };
+})
+
+.controller( 'AppCtrl', function AppCtrl ( $scope, $location, Data, Page ) {
+  $scope.Page = Page;
+  $scope.data = Data;
+
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-    if ( angular.isDefined( toState.data.pageTitle ) ) {
-      $scope.pageTitle = toState.data.pageTitle + ' | crm' ;
+    if ( angular.isDefined(toState.data) && angular.isDefined( toState.data.pageTitle ) ) {
+      Page.setTitle(toState.data.pageTitle);
     }
   });
+
 })
 
 ;
