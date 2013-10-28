@@ -34,10 +34,10 @@ angular.module( 'crm.browse', [
     $scope.history = [
         {
             title: $scope.model.title,
-            url: $location.path()
+            url: "#" + $location.path()
         }
     ];
-    
+
     Page.setTitle($scope.model.title);
 })
 
