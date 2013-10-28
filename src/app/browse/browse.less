@@ -12,23 +12,49 @@
 }
 
 div.crm-browser {
+	height: 500px;
+
 	section {
 		float: left;
+		height: 100%;
+
+		div {
+			height: 100%;
+		}
 
 		&.history {
-				background-color: #0c0;
-			ul {
-				list-style: none;
-				padding: 0;
-				margin: 0;
-				background-color: #c00;
-
-
-				.rotateTranslateOrigin(270deg, -100%, 0, left, top, 0);
+			background-color: #ccc;
+			
+			div {
+				display: table;
 				
-				li {
-					background-color: #00c;
+				div.item,
+				span.seperator {
+					display: table-cell;
+					vertical-align: middle;
 				}
+
+				div.item span.item-inner {
+					display: inline-block;
+					overflow: hidden;
+					width: 1.5em;
+					line-height: 1.5;
+
+					a {
+						display: inline-block;
+						white-space: nowrap;
+
+						.rotateTranslateOrigin(270deg, -100%, 0, left, top, 0);
+
+						&:after {
+						    content: "";
+						    margin-top: 100%;
+						    display: block;
+						}
+					}
+				}
+				
+				
 			}
 		}
 		&.list {
