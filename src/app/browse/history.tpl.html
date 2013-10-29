@@ -1,11 +1,14 @@
 <div class="browse-history">
-	<div ng-repeat="item in history | limitTo:-3" class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-		<span class="item-inner">
-			<a href="{{item.url}}" itemprop="url">
-				<span itemprop="title">
-					{{item.title}} {{$index}}
-				</span>
-			</a>
-		</span>
+	<div class="repeat" ng-repeat="item in history | limitTo:-3">
+		<div class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+			<span class="item-inner">
+				<a href="{{item.url}}" itemprop="url">
+					<span itemprop="title">
+						{{item.title}}
+					</span>
+				</a>
+			</span>
+		</div>
+		<span class="seperator" ng-hide="$last">›</span>
 	</div>
 </div>

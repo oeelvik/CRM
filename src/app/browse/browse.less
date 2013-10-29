@@ -26,35 +26,37 @@ div.crm-browser {
 			background-color: #ccc;
 			
 			div.browse-history {
-				display: table;
-				
-				div.item,
-				span.seperator {
-					display: table-cell;
-					vertical-align: middle;
-				}
+				div.repeat {
+					display: table;
+					height: 100%;
+					float: left;
+					
+					div.item,
+					span.seperator {
+						display: table-cell;
+						vertical-align: middle;
+					}
 
-				div.item span.item-inner {
-					display: inline-block;
-					overflow: hidden;
-					width: 1.5em;
-					line-height: 1.5;
-
-					a {
+					div.item span.item-inner {
 						display: inline-block;
-						white-space: nowrap;
+						overflow: hidden;
+						width: 1.5em;
+						line-height: 1.5;
 
-						.rotateTranslateOrigin(270deg, -100%, 0, left, top, 0);
+						a {
+							display: inline-block;
+							white-space: nowrap;
 
-						&:after {
-						    content: "";
-						    margin-top: 100%;
-						    display: block;
+							.rotateTranslateOrigin(270deg, -100%, 0, left, top, 0);
+
+							&:after {
+							    content: "";
+							    margin-top: 100%;
+							    display: block;
+							}
 						}
 					}
 				}
-				
-				
 			}
 		}
 		&.list {
