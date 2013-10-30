@@ -2,7 +2,8 @@
  * @author Oystein Schroder Elvik
  */
 angular.module( 'crm.browse', [
-  'ui.state'
+  'ui.state',
+  'itemlist'
 ])
 
 .config(function config( $stateProvider ) {
@@ -50,15 +51,9 @@ angular.module( 'crm.browse', [
         }
     ];
 
-    Page.setTitle($scope.model.title);
-})
+    $scope.records = Data.get($stateParams.model);
 
-.directive('browsehistory', function() {
-    return {
-        restrict: "E",
-        replace: true,
-        templateUrl: 'browse/history.tpl.html'
-    };
+    Page.setTitle($scope.model.title);
 })
 
 ;

@@ -1,11 +1,11 @@
 <div class="crm-browser">
 	<section class="history">
-		<browsehistory model="model"/>
+		<div ng-include="'browse/history.tpl.html'" />
 	</section>
 	<section class="list">
-		<div ui-view="browser-list"/>
+		<div ng-include="'browse/list.tpl.html'" />
 	</section>
 	<section class="detail">
-		<div ui-view="browser-detail"/>
+		<div ng-include="'browse/detail.tpl.html'" />
 	</section>
 </div>

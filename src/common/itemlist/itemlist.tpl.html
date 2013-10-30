@@ -1,0 +1,23 @@
+
+<table class="itemlist" ng-class="{hideseccolsonselect : hideseccolsonselect, itemselected: selected}">
+    
+    <thead>
+        <tr class="search" ng-show="searchable">
+            <th colspan="100%">
+                <div>
+                    <input type="search" placeholder="Search" ng-model="searchText" />
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th class="column" ng-repeat="column in columns" ng-class="{primary : column.primary}">
+                {{column.label}}
+            </th>
+        </tr>
+    </thead>
+    <tr class="item" ng-repeat="item in items | filter:searchText" ng-click="onItemSelect(item)" ng-class-odd="'odd'" ng-class-even="'even'" ng-class="itemClass(item)">
+        <td class="column" ng-repeat="column in columns" ng-class="{primary : column.primary}">
+            {{getColumnValue(item, column)}}
+        </td>
+    </tr>
+</table>
