@@ -51,6 +51,8 @@ angular.module( 'crm.browse', [
         }
     ];
 
+    $scope.columns = [{ value: $scope.model.label, label: 'Name', primary: true }];
+
     $scope.records = Data.get($stateParams.model);
 
     Page.setTitle($scope.model.title);
