@@ -13,21 +13,25 @@ angular.module( 'crm.data', ['restangular'])
 
   data.model = {
       person: {
+        name: 'person',
+        title: 'Person',
+        iconClass: 'icon-user',
         label: function(item) {
           return item.firstname + " " + item.lastname;
-        },
-        title: 'Person',
-        iconClass: 'icon-user'
+
+        }
       },
       group: {
-        label: 'name',
+        name: 'group',
         title: 'Group',
-        iconClass: 'icon-group'
+        iconClass: 'icon-group',
+        label: 'name'
       },
       event: {
-        label: 'title',
+        name: 'event',
         title: 'Event',
-        iconClass: 'icon-calendar'
+        iconClass: 'icon-calendar',
+        label: 'title'
       }
   };
 

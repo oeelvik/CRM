@@ -2,7 +2,7 @@
 	<div class="repeat" ng-repeat="item in history.records | limitTo:-3">
 		<div class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
 			<span class="item-inner">
-				<a href="{{item.url}}" itemprop="url">
+				<a href="{{item.path}}" itemprop="url">
 					<span itemprop="title">
 						{{item.title}}
 					</span>

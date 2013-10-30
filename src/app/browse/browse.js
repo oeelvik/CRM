@@ -27,9 +27,15 @@ angular.module( 'crm.browse', [
       }
     }
   });
+
+  $stateProvider.state( 'browse.resource.id', {
+    url: '/{id:[\\d+]}',
+    controller: 'BrowseIDCtrl',
+    templateUrl: 'browse/detail.tpl.html'
+  });
 })
 
-.controller( 'BrowseCtrl', function BrowseController( $scope, $stateParams, $location, Page, Data, BrowserHistory ) {
+.controller( 'BrowseCtrl', function BrowseController( $scope, $state, $stateParams, $location, Page, Data, BrowserHistory ) {
     $scope.model = Data.model[$stateParams.resource];
 
     BrowserHistory.clear();
@@ -37,9 +43,33 @@ angular.module( 'crm.browse', [
 
     $scope.columns = [{ value: $scope.model.label, label: 'Name', primary: true }];
 
-    $scope.records = Data.get($stateParams.resource);
+    $scope.records = Data.get($scope.model.name);
 
     Page.setTitle($scope.model.title);
+
+    $scope.$watch('selected', function(newVal, oldVal){
+        console.log(newVal);
+        if(newVal != null) {
+            $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:newVal});
+        }
+    });
+})
+
+.controller( 'BrowseIDCtrl', function BrowseIDController( $scope, $stateParams, $location, Page, Data, BrowserHistory ) {
+
+    Data.get($scope.model.name, $stateParams.id).then(function(record){
+        $scope.record = record;
+
+        if(angular.isFunction($scope.model.label)){
+            $scope.label = $scope.model.label($scope.record);
+        } else {
+            $scope.label = $scope.record[$scope.model.label];
+        }
+
+        BrowserHistory.add($scope.model.title + " - " + $scope.label, '#' + $location.path());
+
+        Page.setTitle($scope.label + " | " + $scope.model.title);
+    });
 })
 
 ;
