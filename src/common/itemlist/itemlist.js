@@ -34,8 +34,6 @@ angular.module('itemlist', [])
                 }
             };
         }
-        
-        
     };
 });
 

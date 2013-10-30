@@ -3,7 +3,8 @@
  */
 angular.module( 'crm.browse', [
   'ui.state',
-  'itemlist'
+  'itemlist',
+  'crm.browse.history'
 ])
 
 .config(function config( $stateProvider ) {
@@ -28,28 +29,11 @@ angular.module( 'crm.browse', [
   });
 })
 
-.controller( 'BrowseCtrl', function BrowseController( $scope, $stateParams, $location, Page, Data ) {
+.controller( 'BrowseCtrl', function BrowseController( $scope, $stateParams, $location, Page, Data, BrowserHistory ) {
     $scope.model = Data.model[$stateParams.model];
 
-
-    $scope.history = [
-        {
-            title: $scope.model.title,
-            url: '#' + $location.path()
-        },
-        {
-            title: 'Group - Customer',
-            url: '#/browse/person/10'
-        },
-        {
-            title: 'Person - Ola Norman',
-            url: '#/browse/person/10'
-        },
-        {
-            title: 'Person - Kari Norman',
-            url: '#/browse/person/10'
-        }
-    ];
+    BrowserHistory.clear();
+    BrowserHistory.add($scope.model.title, '#' + $location.path());
 
     $scope.columns = [{ value: $scope.model.label, label: 'Name', primary: true }];
 
