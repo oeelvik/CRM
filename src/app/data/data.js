@@ -19,19 +19,57 @@ angular.module( 'crm.data', ['restangular'])
         label: function(item) {
           return item.firstname + " " + item.lastname;
 
-        }
+        },
+        fields: [
+          {
+            name: 'id',
+            label: 'ID'
+          },
+          {
+            name: 'firstname',
+            label: 'Firstname'
+          },
+          {
+            name: 'lastname',
+            label: 'Lastname'
+          },
+          {
+            name: 'note',
+            label: 'Note'
+          }
+        ]
       },
       group: {
         name: 'group',
         title: 'Group',
         iconClass: 'icon-group',
-        label: 'name'
+        label: 'name',
+        fields: [
+          {
+            name: 'id',
+            label: 'ID'
+          },
+          {
+            name: 'name',
+            label: 'Name'
+          }
+        ]
       },
       event: {
         name: 'event',
         title: 'Event',
         iconClass: 'icon-calendar',
-        label: 'title'
+        label: 'title',
+        fields: [
+          {
+            name: 'id',
+            label: 'ID'
+          },
+          {
+            name: 'title',
+            label: 'title'
+          }
+        ]
       }
   };
 

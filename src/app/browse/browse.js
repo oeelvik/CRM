@@ -48,7 +48,6 @@ angular.module( 'crm.browse', [
     Page.setTitle($scope.model.title);
 
     $scope.$watch('selected', function(newVal, oldVal){
-        console.log(newVal);
         if(newVal != null) {
             $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:newVal});
         }

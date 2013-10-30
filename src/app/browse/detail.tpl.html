@@ -1,1 +1,8 @@
-<h1>{{label}}</h1>
+<table>
+	<tbody>
+		<tr ng-repeat="field in model.fields">
+			<th>{{field.label}}</th>
+			<td>{{record[field.name]}}
+		</tr>
+	</tbody>
+</table>
