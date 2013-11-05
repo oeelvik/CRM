@@ -87,11 +87,29 @@ angular.module( 'crm.browse', [
 
     $scope.save = function(){
         if(angular.isNumber($scope.record[$scope.model.idField])){
-            $scope.record.put();
+            $scope.record.put().then($scope.updateSuccess, $scope.saveFailure);
         } else {
             console.log($scope.record);
-            $scope.records.post($scope.record);
+            $scope.records.post($scope.record).then($scope.createSuccess, $scope.saveFailure);
+
         }
+    };
+
+    $scope.updateSuccess = function(record){
+
+      var index = records.indexOf($scope.record);
+      $scope.records.splice(index, 1, record);
+      $scope.record = record;
+
+    };
+
+    $scope.createSuccess = function(record){
+      $scope.record = record;
+      $scope.records.push(record);
+    };
+
+    $scope.saveFailure = function(response){
+      alert("Error with status code", response.status);
     };
 })
 
