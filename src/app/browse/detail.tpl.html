@@ -1,8 +1,13 @@
-<table>
-	<tbody>
-		<tr ng-repeat="field in model.fields">
-			<th>{{field.label}}</th>
-			<td>{{record[field.name]}}
-		</tr>
-	</tbody>
-</table>
+<form name="recordForm">
+	<table>
+		<tbody>
+			<tr ng-repeat="field in model.fields">
+				<th>{{field.label}}</th>
+				<td><input type="search" placeholder="{{field.label}}" ng-model="record[field.name]" ng-disabled="model.idField == field.name" ng-class="{id: model.idField == field.name}"/></td>
+			</tr>
+			<tr>
+				<td></td><td><button class="btn" ng-click="save()" ng-disabled="recordForm.$pristine" ng-class="{'btn-warning': recordForm.$dirty, 'btn-success': recordForm.$pristine}">Save</button></td>
+			</tr>
+		</tbody>
+	</table>
+</form>

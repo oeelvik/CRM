@@ -15,6 +15,7 @@ angular.module( 'crm.data', ['restangular'])
       person: {
         name: 'person',
         title: 'Person',
+        idField: 'id',
         iconClass: 'icon-user',
         label: function(item) {
           return item.firstname + " " + item.lastname;
@@ -42,6 +43,7 @@ angular.module( 'crm.data', ['restangular'])
       group: {
         name: 'group',
         title: 'Group',
+        idField: 'id',
         iconClass: 'icon-group',
         label: 'name',
         fields: [
@@ -58,6 +60,7 @@ angular.module( 'crm.data', ['restangular'])
       event: {
         name: 'event',
         title: 'Event',
+        idField: 'id',
         iconClass: 'icon-calendar',
         label: 'title',
         fields: [
@@ -67,7 +70,7 @@ angular.module( 'crm.data', ['restangular'])
           },
           {
             name: 'title',
-            label: 'title'
+            label: 'Title'
           }
         ]
       }
