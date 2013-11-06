@@ -4,7 +4,7 @@
 angular.module( 'crm.browse', [
   'ui.state',
   'itemlist',
-  'crm.browse.history'
+  'breadcrumb'
 ])
 
 .config(function config( $stateProvider ) {
@@ -41,11 +41,11 @@ angular.module( 'crm.browse', [
   });
 })
 
-.controller( 'BrowseCtrl', function BrowseController( $scope, $state, $stateParams, $location, Page, Data, BrowserHistory ) {
+.controller( 'BrowseCtrl', function BrowseController( $scope, $state, $stateParams, $location, Page, Data, Breadcrumb ) {
     $scope.model = Data.model[$stateParams.resource];
 
-    BrowserHistory.clear();
-    BrowserHistory.add($scope.model.title, '#' + $location.path());
+    Breadcrumb.clear();
+    Breadcrumb.add($scope.model.title, '#' + $location.path());
 
     $scope.columns = [{ value: $scope.model.label, label: 'Name', primary: true }];
     
@@ -66,7 +66,7 @@ angular.module( 'crm.browse', [
     };
 })
 
-.controller( 'BrowseIDCtrl', function BrowseIDController( $scope, $stateParams, $location, Page, Data, BrowserHistory ) {
+.controller( 'BrowseIDCtrl', function BrowseIDController( $scope, $stateParams, $location, Page, Data, Breadcrumb ) {
 
     if($stateParams.id) {
         Data.get($scope.model.name, $stateParams.id).then(function(record){
@@ -78,7 +78,7 @@ angular.module( 'crm.browse', [
                 $scope.label = $scope.record[$scope.model.label];
             }
 
-            BrowserHistory.add($scope.model.title + " - " + $scope.label, '#' + $location.path());
+            Breadcrumb.add($scope.model.title + " - " + $scope.label, '#' + $location.path());
 
             Page.setTitle($scope.label + " | " + $scope.model.title);
 

@@ -18,47 +18,6 @@ div.crm-browser {
 		float: left;
 		height: 100%;
 
-		&.history {
-			background-color: #ccc;
-
-			div {
-				height: 100%;
-			}
-
-			div.browse-history {
-				div.repeat {
-					display: table;
-					height: 100%;
-					float: left;
-					
-					div.item,
-					span.seperator {
-						display: table-cell;
-						vertical-align: middle;
-					}
-
-					div.item span.item-inner {
-						display: inline-block;
-						overflow: hidden;
-						width: 1.5em;
-						line-height: 1.5;
-
-						a {
-							display: inline-block;
-							white-space: nowrap;
-
-							.rotateTranslateOrigin(270deg, -100%, 0, left, top, 0);
-
-							&:after {
-							    content: "";
-							    margin-top: 100%;
-							    display: block;
-							}
-						}
-					}
-				}
-			}
-		}
 		&.list {
 			width: 200px;
 			position: relative;

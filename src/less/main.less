@@ -77,9 +77,15 @@ h2 {
 /**
  * Layout
  */
-div[ui-view=main] {
+
+div#main-container{
     padding-top: 45px;
+
+    div[ui-view=main] {
+      display: inline-block;
+    }
 }
+
 
 
 
@@ -95,4 +101,5 @@ div[ui-view=main] {
 @import '../app/browse/browse.less';
 
 @import '../common/itemlist/itemlist.less';
+@import '../common/breadcrumb/breadcrumb.less';
 
