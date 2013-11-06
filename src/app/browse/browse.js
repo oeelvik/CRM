@@ -60,6 +60,10 @@ angular.module( 'crm.browse', [
             $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:newVal});
         }
     });
+
+    $scope.add = function(){
+        $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:'_new'});
+    };
 })
 
 .controller( 'BrowseIDCtrl', function BrowseIDController( $scope, $stateParams, $location, Page, Data, BrowserHistory ) {

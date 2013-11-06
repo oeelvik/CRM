@@ -18,13 +18,13 @@ div.crm-browser {
 		float: left;
 		height: 100%;
 
-		div {
-			height: 100%;
-		}
-
 		&.history {
 			background-color: #ccc;
-			
+
+			div {
+				height: 100%;
+			}
+
 			div.browse-history {
 				div.repeat {
 					display: table;
@@ -61,6 +61,17 @@ div.crm-browser {
 		}
 		&.list {
 			width: 200px;
+			position: relative;
+
+			.toolbar {
+				width: 100%;
+				position: absolute;
+				bottom: 0;
+				
+				button {
+					width: 100%;
+				}
+			}
 		}
 		&.detail {
 			
