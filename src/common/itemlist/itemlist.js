@@ -15,15 +15,15 @@ angular.module('itemlist', [])
         templateUrl: 'itemlist/itemlist.tpl.html',
         link: function(scope, element, attrs) {
             scope.onItemSelect = function(item) {
-                if(scope.selected == item.id) {
+                if(scope.selected == item) {
                     scope.selected = null;
                 } else {
-                    scope.selected = item.id;
+                    scope.selected = item;
                 }
             };
             
             scope.itemClass = function(item) {
-                return item.id == scope.selected ? 'active' : undefined;
+                return item == scope.selected ? 'active' : undefined;
             };
 
             scope.getColumnValue = function(item, column) {
