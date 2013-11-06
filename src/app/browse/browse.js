@@ -78,33 +78,26 @@ angular.module( 'crm.browse', [
                 $scope.label = $scope.record[$scope.model.label];
             }
 
-            Breadcrumb.add($scope.model.title + " - " + $scope.label, '#' + $location.path());
+            Breadcrumb.set(1,$scope.model.title + " - " + $scope.label, '#' + $location.path());
 
             Page.setTitle($scope.label + " | " + $scope.model.title);
-
-            
         });
     } else {
         $scope.record = [];
     }
-    
 
     $scope.save = function(){
         if(angular.isNumber($scope.record[$scope.model.idField])){
             $scope.record.put().then($scope.updateSuccess, $scope.saveFailure);
         } else {
-            console.log($scope.record);
             $scope.records.post($scope.record).then($scope.createSuccess, $scope.saveFailure);
-
         }
     };
 
     $scope.updateSuccess = function(record){
-
       var index = records.indexOf($scope.record);
       $scope.records.splice(index, 1, record);
       $scope.record = record;
-
     };
 
     $scope.createSuccess = function(record){
