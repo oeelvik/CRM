@@ -1,0 +1,14 @@
+<div class="breadcrumb">
+	<div class="repeat" ng-repeat="item in path | limitTo:-3">
+		<div class="item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+			<span class="item-inner">
+				<a href="{{item.path}}" itemprop="url">
+					<span itemprop="title">
+						{{item.title}}
+					</span>
+				</a>
+			</span>
+		</div>
+		<span class="seperator" ng-hide="$last">›</span>
+	</div>
+</div>
