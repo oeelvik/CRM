@@ -6,7 +6,11 @@
 				<td><input type="search" placeholder="{{field.label}}" ng-model="record[field.name]" ng-disabled="model.idField == field.name" ng-class="{id: model.idField == field.name}"/></td>
 			</tr>
 			<tr>
-				<td></td><td><button class="btn" ng-click="save()" ng-disabled="recordForm.$pristine" ng-class="{'btn-warning': recordForm.$dirty, 'btn-success': recordForm.$pristine}">Save</button></td>
+				<td></td>
+				<td>
+					<button class="btn" ng-click="save()" ng-disabled="recordForm.$pristine" ng-class="{'btn-warning': recordForm.$dirty, 'btn-success': recordForm.$pristine}">Save</button>
+					<button class="btn btn-danger" ng-click="del()" ng-disabled="!record[model.idField]">Delete</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>

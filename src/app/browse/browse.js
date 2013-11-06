@@ -96,6 +96,18 @@ angular.module( 'crm.browse', [
         }
     };
 
+    $scope.del = function(){
+        if(angular.isNumber($scope.record[$scope.model.idField])){
+            $scope.record.remove().then($scope.delSuccess, $scope.failure);
+        }
+    };
+
+    $scope.delSuccess = function(record){
+      var index = records.indexOf($scope.record);
+      $scope.records.splice(index, 1);
+      $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:$scope.records[0][$scope.model.idField]});
+    };
+
     $scope.updateSuccess = function(record){
       var index = records.indexOf($scope.record);
       $scope.records.splice(index, 1, record);
@@ -107,7 +119,7 @@ angular.module( 'crm.browse', [
       $scope.records.push(record);
     };
 
-    $scope.saveFailure = function(response){
+    $scope.failure = function(response){
       alert("Error with status code", response.status);
     };
 })
