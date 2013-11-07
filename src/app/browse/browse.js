@@ -103,13 +103,24 @@ angular.module( 'crm.browse', [
     };
 
     $scope.delSuccess = function(record){
-      var index = records.indexOf($scope.record);
+      var index = null;
+      angular.forEach($scope.records, function(value, key){
+        if($scope.record[$scope.model.idField] == value[$scope.model.idField]){
+          index = key;
+        }
+      });
       $scope.records.splice(index, 1);
       $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:$scope.records[0][$scope.model.idField]});
     };
 
     $scope.updateSuccess = function(record){
-      var index = records.indexOf($scope.record);
+      var index = null;
+      angular.forEach($scope.records, function(value, key){
+        if($scope.record[$scope.model.idField] == value[$scope.model.idField]){
+          index = key;
+        }
+      });
+
       $scope.records.splice(index, 1, record);
       $scope.record = record;
     };
