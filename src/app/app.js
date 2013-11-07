@@ -12,8 +12,29 @@ angular.module( 'crm', [
   'crm.browse'
 ])
 
-.config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {
+.config( function myAppConfig ( $stateProvider, $urlRouterProvider, $provide ) {
   $urlRouterProvider.otherwise( '/dashboard' );
+
+  //Extended logging functionality:
+  $provide.decorator( '$log', ["$delegate", "$filter", function ($delegate, $filter) {
+    var errorFn = $delegate.error;
+
+    $delegate.error = function() {
+      var args = [].slice.call(arguments);
+      var now = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss Z');
+
+      args[0] = now + " - " + args[0];
+
+      if(angular.isFunction(errorFn)){
+        errorFn.apply(null, args);
+      }
+
+      //TODO: send error and log sequece to server
+    };
+
+    return $delegate;
+  }]);
+
 })
 
 .run( function run () {

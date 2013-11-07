@@ -68,7 +68,7 @@ angular.module( 'crm.browse', [
     };
 })
 
-.controller( 'BrowseIDCtrl', function BrowseIDController( $scope, $state, $stateParams, $location, Page, Data, Breadcrumb ) {
+.controller( 'BrowseIDCtrl', function BrowseIDController( $scope, $state, $stateParams, $location, Page, Data, Breadcrumb, $log ) {
 
     if($stateParams.id) {
         Data.get($scope.model.name, $stateParams.id).then(function(record){
@@ -83,6 +83,7 @@ angular.module( 'crm.browse', [
             Breadcrumb.set(1,$scope.model.title + " - " + $scope.label, '#' + $location.path());
 
             Page.setTitle($scope.label + " | " + $scope.model.title);
+            $log.info($scope.label);
         });
     } else {
         $scope.record = [];
@@ -131,7 +132,7 @@ angular.module( 'crm.browse', [
     };
 
     $scope.failure = function(response){
-      alert("Error with status code", response.status);
+      $log.error("Error with status code", response.status);
     };
 })
 
