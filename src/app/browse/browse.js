@@ -68,7 +68,7 @@ angular.module( 'crm.browse', [
     };
 })
 
-.controller( 'BrowseIDCtrl', function BrowseIDController( $scope, $stateParams, $location, Page, Data, Breadcrumb ) {
+.controller( 'BrowseIDCtrl', function BrowseIDController( $scope, $state, $stateParams, $location, Page, Data, Breadcrumb ) {
 
     if($stateParams.id) {
         Data.get($scope.model.name, $stateParams.id).then(function(record){
