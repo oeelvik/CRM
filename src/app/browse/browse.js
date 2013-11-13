@@ -29,7 +29,7 @@ angular.module( 'crm.browse', [
   });
 
   $stateProvider.state( 'browse.resource.id', {
-    url: '/{id:[\\d+]}',
+    url: '/{id:[a-fA-F\\d]+}',
     controller: 'BrowseIDCtrl',
     templateUrl: 'browse/detail.tpl.html'
   });
@@ -52,14 +52,14 @@ angular.module( 'crm.browse', [
     Data.get($scope.model.name).then(function(records){
         $scope.records = records;
 
-        $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:$scope.records[0][$scope.model.idField]});
+        $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:Data.getIdFromRecord($scope.records[0])});
     });
 
     Page.setTitle($scope.model.title);
 
     $scope.$watch('selected', function(newVal, oldVal){
         if(newVal != null) {
-            $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:newVal[$scope.model.idField]});
+            $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:Data.getIdFromRecord(newVal)});
         }
     });
 
@@ -89,8 +89,16 @@ angular.module( 'crm.browse', [
         $scope.record = [];
     }
 
+    $scope.isIDField = function(field){
+      return field.name == '_id';
+    };
+
+    $scope.getIdFromRecord = function (record){
+      return Data.getIdFromRecord(record);
+    };
+
     $scope.save = function(){
-        if(angular.isNumber($scope.record[$scope.model.idField])){
+        if(angular.isNumber(Data.getIdFromRecord($scope.record))){
             $scope.record.put().then($scope.updateSuccess, $scope.saveFailure);
         } else {
             $scope.records.post($scope.record).then($scope.createSuccess, $scope.saveFailure);
@@ -98,7 +106,7 @@ angular.module( 'crm.browse', [
     };
 
     $scope.del = function(){
-        if(angular.isNumber($scope.record[$scope.model.idField])){
+        if(angular.isNumber(Data.getIdFromRecord($scope.record))){
             $scope.record.remove().then($scope.delSuccess, $scope.failure);
         }
     };
@@ -106,18 +114,18 @@ angular.module( 'crm.browse', [
     $scope.delSuccess = function(record){
       var index = null;
       angular.forEach($scope.records, function(value, key){
-        if($scope.record[$scope.model.idField] == value[$scope.model.idField]){
+        if(Data.getIdFromRecord($scope.record) == Data.getIdFromRecord(value)){
           index = key;
         }
       });
       $scope.records.splice(index, 1);
-      $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:$scope.records[0][$scope.model.idField]});
+      $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:Data.getIdFromRecord($scope.records[0])});
     };
 
     $scope.updateSuccess = function(record){
       var index = null;
       angular.forEach($scope.records, function(value, key){
-        if($scope.record[$scope.model.idField] == value[$scope.model.idField]){
+        if(Data.getIdFromRecord($scope.record) == Data.getIdFromRecord(value)){
           index = key;
         }
       });

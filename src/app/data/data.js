@@ -2,12 +2,29 @@
  * @author Oystein Schroder Elvik
  */
 angular.module( 'crm.data', ['restangular'])
+.constant(
+  'settings', {
+    baseUrl: 'http://localhost:8080/crm/rest/collection',
+    idField: '_id.$oid'
+  }
+)
+.config(function(RestangularProvider, settings){
+  RestangularProvider.setBaseUrl(settings.baseUrl);
+  RestangularProvider.setRestangularFields({
+    id: settings.idField
+  });
 
-.config(function(RestangularProvider){
-  RestangularProvider.setBaseUrl('http://localhost:8081');
+  RestangularProvider.setRequestInterceptor(
+      function(elem, operation, what) {
+        if (operation === 'put') {
+          elem._id = undefined;
+          return elem;
+        }
+        return elem;
+  });
 })
 
-.factory('Data', function(Restangular) {
+.factory('Data', function(Restangular, settings) {
 
   var data = {};
 
@@ -15,7 +32,6 @@ angular.module( 'crm.data', ['restangular'])
       person: {
         name: 'person',
         title: 'Person',
-        idField: 'id',
         iconClass: 'icon-user',
         label: function(item) {
           return item.firstname + " " + item.lastname;
@@ -23,7 +39,7 @@ angular.module( 'crm.data', ['restangular'])
         },
         fields: [
           {
-            name: 'id',
+            name: '_id',
             label: 'ID'
           },
           {
@@ -43,12 +59,11 @@ angular.module( 'crm.data', ['restangular'])
       group: {
         name: 'group',
         title: 'Group',
-        idField: 'id',
         iconClass: 'icon-group',
         label: 'name',
         fields: [
           {
-            name: 'id',
+            name: '_id',
             label: 'ID'
           },
           {
@@ -60,12 +75,11 @@ angular.module( 'crm.data', ['restangular'])
       event: {
         name: 'event',
         title: 'Event',
-        idField: 'id',
         iconClass: 'icon-calendar',
         label: 'title',
         fields: [
           {
-            name: 'id',
+            name: '_id',
             label: 'ID'
           },
           {
@@ -74,6 +88,19 @@ angular.module( 'crm.data', ['restangular'])
           }
         ]
       }
+  };
+
+  data.getIdFromRecord = function(elem) {
+    var properties = '_id.$oid'.split('.');
+    var idValue = angular.copy(elem);
+    var found = false;
+    _.each(properties, function(prop) {
+      if (idValue) {
+        idValue = idValue[prop];
+        found = true;
+      }
+    });
+    return (found) ? idValue : undefined;
   };
 
   data.get = function(model, id) {
