@@ -1,9 +1,10 @@
 <form name="recordForm">
 	<table>
 		<tbody>
-			<tr ng-repeat="field in model.fields">
-				<th>{{field.label}}</th>
-				<td><input type="text" placeholder="{{field.label}}" ng-model="record[field.name]" ng-disabled="isIDField(field)" ng-class="{id: isIDField(field)}"/></td>
+		{{model.title}}
+			<tr ng-repeat="(key, val) in model.properties">
+				<th>{{val.title}}</th>
+				<td><input type="text" placeholder="{{val.title}}" ng-model="record[key]" ng-disabled="val.type != 'string'" ng-class="{id: key =='_id'}"/></td>
 			</tr>
 			<tr>
 				<td></td>

@@ -29,69 +29,104 @@ angular.module( 'crm.data', ['restangular'])
   var data = {};
 
   data.model = {
-      person: {
-        name: 'person',
-        title: 'Person',
-        iconClass: 'icon-user',
-        label: function(item) {
-          return item.firstname + " " + item.lastname;
-
+    models: [
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "title": "Person",
+        "description": "",
+        "iconClass": "icon-user",
+        "properties": {
+          "_id": {
+            "type": "object",
+            "title": "ID",
+            "properties": {
+              "$oid": {
+                "type": "string",
+                "title": "ObjectID"
+              }
+            }
+          },
+          "firstname": {
+            "type": "string",
+            "title": "Firstname"
+          },
+          "lastname": {
+            "type": "string",
+            "title": "Lastname"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
         },
-        fields: [
-          {
-            name: '_id',
-            label: 'ID'
-          },
-          {
-            name: 'firstname',
-            label: 'Firstname'
-          },
-          {
-            name: 'lastname',
-            label: 'Lastname'
-          },
-          {
-            name: 'note',
-            label: 'Note'
-          }
-        ]
+        "required": ["_id", "firstname", "lastname"],
+        "label": ["firstname", "lastname"]
       },
-      group: {
-        name: 'group',
-        title: 'Group',
-        iconClass: 'icon-group',
-        label: 'name',
-        fields: [
-          {
-            name: '_id',
-            label: 'ID'
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "title": "Group",
+        "description": "",
+        "iconClass": "icon-group",
+        "properties": {
+          "_id": {
+            "type": "object",
+            "title": "ID",
+            "properties": {
+              "$oid": {
+                "type": "string",
+                "title": "ObjectID"
+              }
+            }
           },
-          {
-            name: 'name',
-            label: 'Name'
+          "name": {
+            "type": "string",
+            "title": "Name"
           }
-        ]
+        },
+        "required": ["_id", "name"],
+        "label": ["name"]
       },
-      event: {
-        name: 'event',
-        title: 'Event',
-        iconClass: 'icon-calendar',
-        label: 'title',
-        fields: [
-          {
-            name: '_id',
-            label: 'ID'
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "title": "Event",
+        "description": "",
+        "iconClass": "icon-calendar",
+        "properties": {
+          "_id": {
+            "type": "object",
+            "title": "ID",
+            "properties": {
+              "$oid": {
+                "type": "string",
+                "title": "ObjectID"
+              }
+            }
           },
-          {
-            name: 'title',
-            label: 'Title'
+          "title": {
+            "type": "string",
+            "title": "Title"
           }
-        ]
+        },
+        "required": ["_id", "title"],
+        "label": ["title"]
       }
+    ],
+    get: function(modelname){
+      var r = {};
+      _.each(data.model.models, function(model) {
+        if (model.title.toLowerCase() == modelname.toLowerCase()) {
+          r = model;
+        }
+      });
+      return r;
+    }
   };
 
   data.getIdFromRecord = function(elem) {
-    var properties = '_id.$oid'.split('.');
+    var properties = settings.idField.split('.');
     var idValue = angular.copy(elem);
     var found = false;
     _.each(properties, function(prop) {

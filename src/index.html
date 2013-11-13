@@ -33,10 +33,10 @@
                                 Dashboard
                             </a>
                         </li>
-                        <li ng-repeat="(key, val) in data.model" ui-route="/browse/{{key}}" ng-class="{active:$uiRoute}">
-                            <a href="#/browse/{{key}}">
-                                <i class="{{val.iconClass}}"></i>
-                                {{val.title}}
+                        <li ng-repeat="model in data.model.models" ui-route="/browse/{{model.title.toLowerCase()}}" ng-class="{active:$uiRoute}">
+                            <a href="#/browse/{{model.title.toLowerCase()}}">
+                                <i class="{{model.iconClass}}"></i>
+                                {{model.title}}
                             </a>
                         </li>
                     </ul>

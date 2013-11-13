@@ -28,28 +28,31 @@ angular.module( 'crm.browse', [
     }
   });
 
-  $stateProvider.state( 'browse.resource.id', {
-    url: '/{id:[a-fA-F\\d]+}',
+  $stateProvider.state( 'browse.resource.new', {
+    url: '/_new',
     controller: 'BrowseIDCtrl',
     templateUrl: 'browse/detail.tpl.html'
   });
 
-  $stateProvider.state( 'browse.resource.new', {
-    url: '/_new',
+  $stateProvider.state( 'browse.resource.id', {
+    url: '/{id:[a-fA-F\\d]+}',
     controller: 'BrowseIDCtrl',
     templateUrl: 'browse/detail.tpl.html'
   });
 })
 
 .controller( 'BrowseCtrl', function BrowseController( $scope, $state, $stateParams, $location, Page, Data, Breadcrumb ) {
-    $scope.model = Data.model[$stateParams.resource];
+    $scope.model = Data.model.get($stateParams.resource);
 
     Breadcrumb.clear();
     Breadcrumb.add($scope.model.title, '#' + $location.path());
-
-    $scope.columns = [{ value: $scope.model.label, label: 'Name', primary: true }];
     
-    Data.get($scope.model.name).then(function(records){
+    $scope.columns = [];
+    _.each($scope.model.label, function(label) {
+      $scope.columns.push({ value: label, label: /*$scope.model.properties[label].title*/'', primary: true });
+    });
+
+    Data.get($scope.model.title.toLowerCase()).then(function(records){
         $scope.records = records;
 
         $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:Data.getIdFromRecord($scope.records[0])});
@@ -71,14 +74,16 @@ angular.module( 'crm.browse', [
 .controller( 'BrowseIDCtrl', function BrowseIDController( $scope, $state, $stateParams, $location, Page, Data, Breadcrumb, $log ) {
 
     if($stateParams.id) {
-        Data.get($scope.model.name, $stateParams.id).then(function(record){
+        Data.get($scope.model.title.toLowerCase(), $stateParams.id).then(function(record){
             $scope.record = record;
 
-            if(angular.isFunction($scope.model.label)){
-                $scope.label = $scope.model.label($scope.record);
-            } else {
-                $scope.label = $scope.record[$scope.model.label];
-            }
+            $scope.label = "";
+            _.each($scope.model.label, function(label) {
+              if($scope.label !== "") {
+                $scope.label = $scope.label + " ";
+              }
+              $scope.label = $scope.label + $scope.record[label];
+            });
 
             Breadcrumb.set(1,$scope.model.title + " - " + $scope.label, '#' + $location.path());
 
@@ -98,15 +103,16 @@ angular.module( 'crm.browse', [
     };
 
     $scope.save = function(){
-        if(angular.isNumber(Data.getIdFromRecord($scope.record))){
-            $scope.record.put().then($scope.updateSuccess, $scope.saveFailure);
-        } else {
+      console.log(Data.getIdFromRecord($scope.record));
+        if(angular.isUndefined(Data.getIdFromRecord($scope.record))){
             $scope.records.post($scope.record).then($scope.createSuccess, $scope.saveFailure);
+        } else {
+            $scope.record.put().then($scope.updateSuccess, $scope.saveFailure);
         }
     };
 
     $scope.del = function(){
-        if(angular.isNumber(Data.getIdFromRecord($scope.record))){
+        if(!angular.isUndefined(Data.getIdFromRecord($scope.record))){
             $scope.record.remove().then($scope.delSuccess, $scope.failure);
         }
     };
