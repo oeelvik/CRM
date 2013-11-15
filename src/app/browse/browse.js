@@ -55,7 +55,12 @@ angular.module( 'crm.browse', [
     Data.get($scope.model.title.toLowerCase()).then(function(records){
         $scope.records = records;
 
-        $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:Data.getIdFromRecord($scope.records[0])});
+        if(angular.isUndefined(Data.getIdFromRecord($scope.records[0]))){
+          $state.transitionTo('browse.resource.new', {resource: $stateParams.resource});
+        } else {
+          $state.transitionTo('browse.resource.id', {resource: $stateParams.resource, id:Data.getIdFromRecord($scope.records[0])});
+        }
+        
     });
 
     Page.setTitle($scope.model.title);

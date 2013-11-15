@@ -4,7 +4,7 @@
 angular.module( 'crm.data', ['restangular'])
 .constant(
   'settings', {
-    baseUrl: 'http://localhost:8080/crm/rest/collection',
+    baseUrl: '/crm/rest/data',
     idField: '_id.$oid'
   }
 )
